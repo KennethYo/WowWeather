@@ -1,6 +1,6 @@
 package cn.kenneth.wowweather.network;
 
-import cn.kenneth.wowweather.model.Model;
+import cn.kenneth.wowweather.model.CityWeather;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 import rx.Observable;
@@ -10,5 +10,5 @@ import rx.Observable;
  */
 public interface APIServices {
     @GET("/heweather/weather/free")
-    Observable<Model> getWeather(@Query("city") String city);
+    Observable<CityWeather> getWeather(@Query("city") String city);
 }

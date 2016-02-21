@@ -2,6 +2,7 @@ package cn.kenneth.wowweather.network;
 
 import java.io.IOException;
 
+import cn.kenneth.wowweather.network.converter.WeatherGsonConverterFactory;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -54,7 +55,7 @@ public class NetWork {
                 .baseUrl(BASE_URL)
                 .client(okHttpClient)
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(WeatherGsonConverterFactory.create())
                 .build();
 
     }
