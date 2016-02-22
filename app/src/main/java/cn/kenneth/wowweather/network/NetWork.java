@@ -39,8 +39,6 @@ public class NetWork {
             public Response intercept(Chain chain) throws IOException {
                 Request originRequest = chain.request();
                 Request.Builder builder = originRequest.newBuilder();
-                builder.method(originRequest.method(),originRequest.body());
-                builder.headers(originRequest.headers());
                 builder.header("apikey", API_KEY);
 
                 return chain.proceed(builder.build());
