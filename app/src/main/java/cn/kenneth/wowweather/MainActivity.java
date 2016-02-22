@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
 
-                APIServices apiServices = NetWork.getInstance().getRetrofit().create(APIServices.class);
+                APIServices apiServices = NetWork.getInstance().create(APIServices.class);
                 Observable<CityWeather> weather = apiServices.getWeather("beijing");
                 weather.subscribeOn(Schedulers.newThread())
                         .observeOn(AndroidSchedulers.mainThread())

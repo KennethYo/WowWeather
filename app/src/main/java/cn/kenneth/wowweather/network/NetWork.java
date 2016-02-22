@@ -10,14 +10,13 @@ import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * 网络工具
  * Created by Kenneth on 2016/2/21.
  */
 public class NetWork {
-    private static final String BASE_URL = "http://apis.baidu.com/heweather/weather/free";
+    private static final String BASE_URL = "http://apis.baidu.com/";
     private static final String API_KEY = "20b6ea3c3b9c73f364b1dbc63dcbc563";
 
     private static NetWork ourInstance = new NetWork();
@@ -32,35 +31,39 @@ public class NetWork {
     }
 
     private void init() {
-        OkHttpClient okHttpClient = new OkHttpClient();
-
         HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor(HttpLoggingInterceptor.Logger.DEFAULT);
         httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        okHttpClient.interceptors().add(httpLoggingInterceptor);
 
         Interceptor headerInterceptor = new Interceptor() {
             @Override
             public Response intercept(Chain chain) throws IOException {
                 Request originRequest = chain.request();
                 Request.Builder builder = originRequest.newBuilder();
+                builder.method(originRequest.method(),originRequest.body());
+                builder.headers(originRequest.headers());
                 builder.header("apikey", API_KEY);
 
                 return chain.proceed(builder.build());
             }
         };
-        okHttpClient.interceptors().add(headerInterceptor);
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .addInterceptor(httpLoggingInterceptor)
+                .addInterceptor(headerInterceptor)
+                .build();
+
 
 
         mRetrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
                 .client(okHttpClient)
+                .baseUrl(BASE_URL)
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .addConverterFactory(WeatherGsonConverterFactory.create())
                 .build();
 
     }
 
-    public Retrofit getRetrofit() {
-        return mRetrofit;
+    public <T> T create(Class<T> service) {
+        return mRetrofit.create(service);
     }
+
 }

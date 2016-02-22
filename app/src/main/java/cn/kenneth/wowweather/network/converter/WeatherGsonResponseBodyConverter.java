@@ -34,8 +34,11 @@ class WeatherGsonResponseBodyConverter<T> implements Converter<ResponseBody, T> 
             if (string.startsWith(PREFIX) && string.endsWith(SUFFIX)) {
                 JsonObject jsonObject = gson.fromJson(string, JsonObject.class);
                 JsonArray jsonArray = jsonObject.getAsJsonArray(KEY_NAME);
-                if (jsonArray.size() > 0)
+                if (jsonArray.size() > 0) {
                     return adapter.fromJsonTree(jsonArray.get(0));
+                } else {
+                    return null;
+                }
             }
             return adapter.fromJson(string);
         } finally {
