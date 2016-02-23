@@ -2,6 +2,7 @@ package cn.kenneth.wowweather.network;
 
 import java.io.IOException;
 
+import cn.kenneth.wowweather.Constants;
 import cn.kenneth.wowweather.network.converter.WeatherGsonConverterFactory;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -16,8 +17,6 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
  * Created by Kenneth on 2016/2/21.
  */
 public class NetWork {
-    private static final String BASE_URL = "http://apis.baidu.com/";
-    private static final String API_KEY = "20b6ea3c3b9c73f364b1dbc63dcbc563";
 
     private static NetWork ourInstance = new NetWork();
     private Retrofit mRetrofit;
@@ -39,7 +38,7 @@ public class NetWork {
             public Response intercept(Chain chain) throws IOException {
                 Request originRequest = chain.request();
                 Request.Builder builder = originRequest.newBuilder();
-                builder.header("apikey", API_KEY);
+                builder.header("apikey", Constants.API_STORE_KEY);
 
                 return chain.proceed(builder.build());
             }
@@ -53,7 +52,7 @@ public class NetWork {
 
         mRetrofit = new Retrofit.Builder()
                 .client(okHttpClient)
-                .baseUrl(BASE_URL)
+                .baseUrl(Constants.BASE_URL)
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .addConverterFactory(WeatherGsonConverterFactory.create())
                 .build();

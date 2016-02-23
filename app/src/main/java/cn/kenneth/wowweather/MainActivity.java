@@ -9,6 +9,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.tencent.bugly.crashreport.CrashReport;
+
 import cn.kenneth.wowweather.model.CityWeather;
 import cn.kenneth.wowweather.network.APIServices;
 import cn.kenneth.wowweather.network.NetWork;
@@ -32,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+
+                CrashReport.testJavaCrash();
 
                 APIServices apiServices = NetWork.getInstance().create(APIServices.class);
                 Observable<CityWeather> weather = apiServices.getWeather("beijing");
