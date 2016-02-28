@@ -38,16 +38,16 @@ public class NetWork {
             public Response intercept(Chain chain) throws IOException {
                 Request originRequest = chain.request();
                 Request.Builder builder = originRequest.newBuilder();
-                builder.header("apikey", Constants.API_STORE_KEY);
+                builder.addHeader("apikey", Constants.API_STORE_KEY);
 
                 return chain.proceed(builder.build());
             }
         };
-        OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                .addInterceptor(httpLoggingInterceptor)
-                .addInterceptor(headerInterceptor)
-                .build();
 
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .addInterceptor(headerInterceptor)
+                .addInterceptor(httpLoggingInterceptor)
+                .build();
 
 
         mRetrofit = new Retrofit.Builder()

@@ -38,6 +38,8 @@ public class CityWeather {
      * suggestion : {"comf":{"brf":"极不舒适","txt":"白天天气虽然晴好，但气温低，您会感觉十分寒冷，极不舒适，请注意保暖，并避免出门，以防冻伤。"},"cw":{"brf":"较适宜","txt":"较适宜洗车，未来一天无雨，风力较小，擦洗一新的汽车至少能保持一天。"},"drsg":{"brf":"寒冷","txt":"天气寒冷，建议着厚羽绒服、毛皮大衣加厚毛衣等隆冬服装。年老体弱者尤其要注意保暖防冻。"},"flu":{"brf":"极易发","txt":"天气寒冷，且昼夜温差很大，极易发生感冒。请特别注意增加衣服保暖防寒。"},"sport":{"brf":"较不宜","txt":"天气较好，但考虑天气寒冷，风力较强，推荐您进行室内运动，若户外运动请注意保暖并做好准备活动。"},"trav":{"brf":"较不宜","txt":"天气较好，但温度很低，且风稍大，可有选择进行出游，比如说选择雪上项目，这也不错哦。"},"uv":{"brf":"最弱","txt":"属弱紫外线辐射天气，无需特别防护。若长期在户外，建议涂擦SPF在8-12之间的防晒护肤品。"}}
      */
 
+    private Aqi aqi;
+
     private String status;
     /**
      * comf : {"brf":"极不舒适","txt":"白天天气虽然晴好，但气温低，您会感觉十分寒冷，极不舒适，请注意保暖，并避免出门，以防冻伤。"}
@@ -97,6 +99,14 @@ public class CityWeather {
 
     public void setHourly_forecast(List<HourlyForecast> hourly_forecast) {
         this.hourly_forecast = hourly_forecast;
+    }
+
+    public Aqi getAqi() {
+        return aqi;
+    }
+
+    public void setAqi(Aqi aqi) {
+        this.aqi = aqi;
     }
 
     public Basic getBasic() {
