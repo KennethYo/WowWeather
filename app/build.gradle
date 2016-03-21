@@ -1,6 +1,25 @@
 apply plugin: 'com.android.application'
 
+def cmd = 'git rev-list HEAD --count'
+def gitVersion = cmd.execute().text.trim().toInteger()
+
 android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.2"
+
+    defaultConfig {
+        applicationId "cn.kenneth.wowweather"
+        minSdkVersion 14
+        targetSdkVersion 23
+        versionCode gitVersion
+        versionName "1.0"
+
+        ndk {
+            //设置支持的SO库架构
+            abiFilters 'armeabi', 'x86', 'armeabi-v7a', 'x86_64', 'arm64-v8a'
+        }
+    }
+
     signingConfigs {
         config {
             keyAlias 'WowWeather'
@@ -9,26 +28,15 @@ android {
             storePassword 'password123'
         }
     }
-    compileSdkVersion 23
-    buildToolsVersion "23.0.2"
-    defaultConfig {
-        applicationId "cn.kenneth.wowweather"
-        minSdkVersion 14
-        targetSdkVersion 23
-        versionCode 1
-        versionName "1.0"
 
-        ndk {
-            //设置支持的SO库架构
-            abiFilters 'armeabi', 'x86', 'armeabi-v7a', 'x86_64', 'arm64-v8a'
-        }
-    }
     lintOptions {
         disable 'InvalidPackage'
     }
+
     packagingOptions {
         exclude 'META-INF/services/javax.annotation.processing.Processor'
     }
+
     buildTypes {
         release {
             minifyEnabled false
