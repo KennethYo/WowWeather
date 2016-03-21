@@ -1,7 +1,25 @@
 apply plugin: 'com.android.application'
 
-def cmd = 'git rev-list HEAD --count'
-def gitVersion = cmd.execute().text.trim().toInteger()
+def getVersionCode(){
+    def cmd = 'git rev-list HEAD --count'
+    def gitVersion = cmd.execute().text.trim().toInteger()
+}
+
+def getVersionName(){
+    def cmd = 'git describe --tags'
+    def version = cmd.execute().text.trim()
+
+    def pattern = "-(\\d+)-g"
+    def matcher = version =~ pattern
+
+    if (matcher) {
+        version = version.substring(0, matcher.start()) + "." + matcher[0][1]
+    } else {
+        version = version + ".0"
+    }
+
+    return version
+}
 
 android {
     compileSdkVersion 23
@@ -11,8 +29,8 @@ android {
         applicationId "cn.kenneth.wowweather"
         minSdkVersion 14
         targetSdkVersion 23
-        versionCode gitVersion
-        versionName "1.0"
+        versionCode getVersionCode()
+        versionName getVersionName()
 
         ndk {
             //设置支持的SO库架构
